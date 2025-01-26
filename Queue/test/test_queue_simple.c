@@ -18,12 +18,12 @@ void test_queue_construct(void)
 {
     Queue *q = NULL;
 
-    //Check input NULL
+    //Input NULL
     q = queue_construct(0);
     TEST_ASSERT_NULL_MESSAGE(q, "queue_construct failed : 0");
     free(q);
 
-    //Check input size QUEUE_MAX_SIZE-1
+    //CInput size QUEUE_MAX_SIZE-1
     q = queue_construct(QUEUE_MAX_SIZE-1);
     TEST_ASSERT_NOT_NULL_MESSAGE(q, "queue_construct failed: QUEUE_MAX_SIZE - 1");
     TEST_ASSERT_TRUE_MESSAGE(queue_is_empty(q), "queue_construct size: QUEUE_MAX_SIZE - 1");
@@ -32,13 +32,13 @@ void test_queue_construct(void)
     TEST_ASSERT_EQUAL_MESSAGE(0, q->i_size, "queue_construct size mismatch : QUEUE_MAX_SIZE - 1");
     free(q);
 
-    //Check input size QUEUE_MAX_SIZE
+    //Input size QUEUE_MAX_SIZE
     q = queue_construct(QUEUE_MAX_SIZE);
     TEST_ASSERT_NOT_NULL_MESSAGE(q, "queue_construct failed: QUEUE_MAX_SIZE");
     TEST_ASSERT_TRUE_MESSAGE(queue_is_empty(q), "queue_construct size: QUEUE_MAX_SIZE");
     free(q);
 
-    //Check input size QUEUE_MAX_SIZE+1
+    //Input size QUEUE_MAX_SIZE+1
     q = queue_construct(QUEUE_MAX_SIZE+1);
     TEST_ASSERT_NULL_MESSAGE(q, "queue_construct failed : QUEUE_MAX_SIZE+1");
     free(q);
@@ -51,18 +51,18 @@ void test_queue_destruct(void)
     Queue *q = NULL;
     int result = 0; 
 
-    //Check input NULL
+    //Input NULL
     result = queue_destruct(q);
     TEST_ASSERT_NULL_MESSAGE(q, "queue_destruct failed : Null");
     TEST_ASSERT_EQUAL_MESSAGE(FAILURE, result, "queue_destruct return failed : Null");
     
-
+    //Input empty queue
     q = queue_construct(1);
     result = queue_destruct(q);
     TEST_ASSERT_NULL_MESSAGE(q, "queue_destruct failed: 0");
     TEST_ASSERT_EQUAL_MESSAGE(SUCCESS, result, "queue_destruct return failed : 0");
 
-
+    //Input non empty queue
     q = queue_construct(QUEUE_MAX_SIZE);
     result = queue_push(q, 1);
     result = queue_destruct(q);
@@ -78,14 +78,16 @@ void test_queue_is_empty(void)
     Queue *q = NULL;
     int result = 0;   
 
+    //Input NULL
     result = queue_is_empty(q);
     TEST_ASSERT_EQUAL_MESSAGE(FAILURE, result, "queue_is_empty return failed : Null");
     
+    //Input empty queue
     q = queue_construct(1);
     result = queue_is_empty(q);
     TEST_ASSERT_EQUAL_MESSAGE(1, result, "queue_is_empty return failed : 1");
     
-
+    //Input non empty queue
     result = queue_push(q, 1);
     result = queue_is_empty(q);
     TEST_ASSERT_EQUAL_MESSAGE(0, result, "queue_is_empty return failed : 0");
@@ -101,13 +103,16 @@ void test_queue_is_full(void)
     Queue *q = NULL;
     int result = 0;   
 
+    //Input NULL
     result = queue_is_full(q);
     TEST_ASSERT_EQUAL_MESSAGE(FAILURE, result, "queue_is_full return failed : Null");
     
+    //Input empty queue
     q = queue_construct(1);
     result = queue_is_full(q);
     TEST_ASSERT_EQUAL_MESSAGE(0, result, "queue_is_full return failed : 0");
 
+    //Input non empty && full queue
     result = queue_push(q, 1);
     result = queue_is_full(q);
     TEST_ASSERT_EQUAL_MESSAGE(1, result, "queue_is_full return failed : 1");
@@ -124,11 +129,12 @@ void test_queue_push(void)
     Queue *q = NULL;
     int result = 0;   
 
+    //Input NULL
     result = queue_push(q, 1);
     TEST_ASSERT_NULL_MESSAGE(q, "queue_push failed : Null");
     TEST_ASSERT_EQUAL_MESSAGE(FAILURE, result, "queue_push return failed : Null");
 
-
+    //Input empty queue
     q = queue_construct(1);
     result = queue_push(q, 1);
     TEST_ASSERT_NOT_NULL_MESSAGE(q, "queue_push failed: 0");
@@ -138,7 +144,7 @@ void test_queue_push(void)
     TEST_ASSERT_EQUAL_MESSAGE(1, q->i_size, "queue_push size mismatch : 0");
     TEST_ASSERT_EQUAL_MESSAGE(q->p_front, q->p_rear, "queue_push rear mismatch : 0");
 
-    
+    //Input non empty queue && over size
     result = queue_push(q, 2);
     TEST_ASSERT_NOT_NULL_MESSAGE(q, "queue_push failed: 1");
     TEST_ASSERT_EQUAL_MESSAGE(FAILURE, result, "queue_push return failed : 1");
@@ -158,10 +164,12 @@ void test_queue_pop(void)
     int result = 0; 
     ElementType t_item = 0;
 
+    //Input NULL
     result = queue_pop(q, &t_item);
     TEST_ASSERT_NULL_MESSAGE(q, "queue_pop failed : Null");
     TEST_ASSERT_EQUAL_MESSAGE(FAILURE, result, "queue_pop return failed : Null");
 
+    //Input empty queue
     q = queue_construct(1);
     result = queue_pop(q, &t_item);
     TEST_ASSERT_NOT_NULL_MESSAGE(q, "queue_pop failed: 1");
@@ -171,6 +179,7 @@ void test_queue_pop(void)
     TEST_ASSERT_NULL_MESSAGE(q->p_rear, "queue_pop p_rear failed : 1");
     TEST_ASSERT_EQUAL_MESSAGE(0, q->i_size, "queue_pop size mismatch : 1");
 
+    //Input non empty && full queue 
     q = queue_construct(1);
     result = queue_push(q, 1);
     result = queue_pop(q, &t_item);

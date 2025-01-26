@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include <queue_simple.h>
+#include "queue_simple.h"
 
 /*************************************
  * @brief Constructs a new queue.
@@ -13,13 +13,13 @@
  * @param i_size The capacity of the queue. Must be greater than 0 and less than or equal to QUEUE_MAX_SIZE.
  * @return Queue* If successful, returns a pointer to the new queue; otherwise, returns NULL.
  *************************************/
-Queue* queue_construct(int i_size)
+Queue* queue_construct(int i_capacity)
 {
     Queue *p_queue = NULL;
 
-    if (i_size<= 0 || i_size > QUEUE_MAX_SIZE)
+    if (i_capacity<= 0 || i_capacity > QUEUE_MAX_SIZE)
     {
-        printf("queue_construct : over size %d\n", i_size);
+        printf("queue_construct : over size %d\n", i_capacity);
         return NULL;       
     }
     
@@ -34,7 +34,7 @@ Queue* queue_construct(int i_size)
     p_queue->i_size = 0;
     p_queue->p_front = NULL;
     p_queue->p_rear = NULL;
-    p_queue->i_capacity = i_size;
+    p_queue->i_capacity = i_capacity;
 
     return p_queue;   
 }
@@ -91,7 +91,7 @@ int queue_push(Queue *p_queue, ElementType i_item)
         return FAILURE;
     }
 
-    if (1 == queue_is_full(p_queue))
+    if (p_queue->i_size >= p_queue->i_capacity)
     {
         printf("queue_push : queue is full\n");
         return FAILURE;
@@ -145,7 +145,7 @@ int queue_pop(Queue *p_queue, ElementType *p_item)
         return FAILURE;
     }
 
-    if (1 == queue_is_empty(p_queue))
+    if (0 == p_queue->i_size)
     {
         printf("queue_pop : queue is empty\n");
         return FAILURE;
@@ -208,6 +208,6 @@ int queue_is_full(Queue *p_queue)
         return FAILURE;
     }
 
-    return (p_queue->i_capacity == p_queue->i_size);    
+    return (p_queue->i_size >= p_queue->i_capacity);    
 }
 

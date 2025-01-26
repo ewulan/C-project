@@ -26,7 +26,7 @@ void test_queue_construct(void)
     //CInput size QUEUE_MAX_SIZE-1
     q = queue_construct(QUEUE_MAX_SIZE-1);
     TEST_ASSERT_NOT_NULL_MESSAGE(q, "queue_construct failed: QUEUE_MAX_SIZE - 1");
-    TEST_ASSERT_TRUE_MESSAGE(queue_is_empty(q), "queue_construct size: QUEUE_MAX_SIZE - 1");
+    TEST_ASSERT_EQUAL_MESSAGE(QUEUE_MAX_SIZE-1, q->i_capacity, "queue_construct capacity mismatch : QUEUE_MAX_SIZE - 1");
     TEST_ASSERT_NULL_MESSAGE(q->p_front, "queue_construct p_front failed : QUEUE_MAX_SIZE - 1");
     TEST_ASSERT_NULL_MESSAGE(q->p_rear, "queue_construct p_rear failed : QUEUE_MAX_SIZE - 1");
     TEST_ASSERT_EQUAL_MESSAGE(0, q->i_size, "queue_construct size mismatch : QUEUE_MAX_SIZE - 1");
@@ -35,7 +35,11 @@ void test_queue_construct(void)
     //Input size QUEUE_MAX_SIZE
     q = queue_construct(QUEUE_MAX_SIZE);
     TEST_ASSERT_NOT_NULL_MESSAGE(q, "queue_construct failed: QUEUE_MAX_SIZE");
-    TEST_ASSERT_TRUE_MESSAGE(queue_is_empty(q), "queue_construct size: QUEUE_MAX_SIZE");
+    //TEST_ASSERT_TRUE_MESSAGE(queue_is_empty(q), "queue_construct size: QUEUE_MAX_SIZE");
+    TEST_ASSERT_EQUAL_MESSAGE(QUEUE_MAX_SIZE, q->i_capacity, "queue_construct capacity mismatch : QUEUE_MAX_SIZE");
+    TEST_ASSERT_NULL_MESSAGE(q->p_front, "queue_construct p_front failed : QUEUE_MAX_SIZE");
+    TEST_ASSERT_NULL_MESSAGE(q->p_rear, "queue_construct p_rear failed : QUEUE_MAX_SIZE");
+    TEST_ASSERT_EQUAL_MESSAGE(0, q->i_size, "queue_construct size mismatch : QUEUE_MAX_SIZE");
     free(q);
 
     //Input size QUEUE_MAX_SIZE+1

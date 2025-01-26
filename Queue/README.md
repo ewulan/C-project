@@ -93,15 +93,3 @@ Implement a simple queue module in C using TDD.
 
 ---
 
-## How to Build and Run Tests
-
-### Compilation and Testing
-```bash
-# Remove old test executable
-rm test_queue.exe
-
-# Compile the test and source files
-gcc -o ./test_queue test/test_queue_simple.c src/queue_simple.c unity/unity.c -Iunity -Isrc
-
-# Run the test executable
-./test_queue.exe

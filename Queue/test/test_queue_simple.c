@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <../unity/unity.h>
 #include <../unity/unity_internals.h>
-#include <../src/queue_simple.h>  // 包含你的头文件
+#include <../src/queue_simple.h>  
 
 void setUp(void) 
 {
@@ -59,14 +59,12 @@ void test_queue_destruct(void)
     //Input empty queue
     q = queue_construct(1);
     result = queue_destruct(q);
-    TEST_ASSERT_NULL_MESSAGE(q, "queue_destruct failed: 0");
     TEST_ASSERT_EQUAL_MESSAGE(SUCCESS, result, "queue_destruct return failed : 0");
 
     //Input non empty queue
     q = queue_construct(QUEUE_MAX_SIZE);
     result = queue_push(q, 1);
     result = queue_destruct(q);
-    TEST_ASSERT_NULL_MESSAGE(q, "queue_destruct failed: 00");
     TEST_ASSERT_EQUAL_MESSAGE(SUCCESS, result, "queue_destruct return failed : 00");
 
 }
@@ -259,7 +257,6 @@ void test_queue_normal(void)
 
     
     result = queue_destruct(q);
-    TEST_ASSERT_NULL_MESSAGE(q, "queue_normal queue_destruct failed: 0");
     TEST_ASSERT_EQUAL_MESSAGE(SUCCESS, result, "queue_normal queue_destruct return failed : 0");
     
 }

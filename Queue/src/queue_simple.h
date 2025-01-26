@@ -28,6 +28,7 @@ typedef struct {
     Node *p_front;           // 
     Node *p_rear;
     int i_size;
+    int i_capacity;
 } Queue;
 
 Queue* queue_construct(int i_size);

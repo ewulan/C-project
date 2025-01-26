@@ -1,5 +1,5 @@
-# Project Title
-A brief description of your project.
+# C_Queue
+Implement a simple queue module in C using TDD.
 
 # Queue Implementation
 
@@ -20,10 +20,10 @@ A brief description of your project.
   Restricting capacity ensures better control over system resources for specific use cases.
 
 ### 1.3 Object-Oriented Design Principles
-- **Encapsulation:**  
-  A `QueueOps` function pointer table is used to provide queue operations (e.g., construction, destruction, enqueue, dequeue, checking if the queue is empty or full).
+- **OOP:**  
+  This queue implementation reflects the principles of encapsulation and abstraction in object-oriented programming. Through function interfaces such as queue_construct, queue_push, and queue_pop, the internal implementation details (e.g., Node and Queue structures) are hidden, and external code cannot directly access internal members like p_front, p_rear, and i_size, ensuring data safety and control. Additionally, the interfaces abstract the queue's operations, allowing users to perform tasks like construction, destruction, enqueue, and dequeue without needing to understand the underlying linked-list implementation, significantly improving code maintainability and usability.
 - **Type Restriction:**  
-  The current implementation only supports elements of type `int`, but the use of `typedef ElementType` provides a foundation for future extension to other types.
+  The current implementation only supports elements of type int. However, by using typedef ElementType, the design provides flexibility for future extensions to support other data types, such as float or string.
 
 ---
 
@@ -89,7 +89,7 @@ A brief description of your project.
 - **Problem:**  
   The current implementation only supports `int` data types, limiting flexibility.
 - **Solution:**  
-  Use `void*` pointers to store and process data of various types.
+  By replacing ElementType with void*, the implementation can support polymorphism, allowing the queue to store and process data of various types.
 
 ---
 
